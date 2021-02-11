@@ -1,24 +1,32 @@
-# README
+# Rails on Cloud Run
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+https://cloud.google.com/run/docs/quickstarts/build-and-deploy#ruby
 
-Things you may want to cover:
+## Build and push the container image
 
-* Ruby version
+```
+gcloud builds submit --tag gcr.io/[project-id]/rails-on-cloudrun
+```
 
-* System dependencies
+## Deploy the container image to Cloud Run
 
-* Configuration
+```
+gcloud run deploy --image gcr.io/[project-id]/rails-on-cloudrun --platform managed \
+ --set-env-vars "RAILS_MASTER_KEY=[secret]" \
+ --set-env-vars "RAILS_ENV=production"
 
-* Database creation
+```
 
-* Database initialization
+## Environment variables
 
-* How to run the test suite
+Set any default environment variables in the Dockerfile with
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+ENV KEY1=VALUE1,KEY2=VALUE2
+```
 
-* Deployment instructions
+Generate a SECRET_KEY_BASE
 
-* ...
+```
+rake secret
+```
