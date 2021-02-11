@@ -2,6 +2,8 @@ FROM ruby:2.7.2-slim
 
 WORKDIR /usr/src/app/
 
+ENV RAILS_ENV=production
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
@@ -9,6 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 EXPOSE 3000
+
+RUN gem update --system && gem install bundler
 
 COPY Gemfile Gemfile.lock ./
 
@@ -25,4 +29,5 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["bin/puma", "-C", "config/puma.rb"]
+# CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
