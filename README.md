@@ -14,7 +14,6 @@ gcloud builds submit --tag gcr.io/[project-id]/rails-on-cloudrun
 gcloud run deploy --image gcr.io/[project-id]/rails-on-cloudrun --platform managed \
  --set-env-vars "RAILS_MASTER_KEY=[secret]" \
  --set-env-vars "RAILS_ENV=production"
-
 ```
 
 ## Environment variables
