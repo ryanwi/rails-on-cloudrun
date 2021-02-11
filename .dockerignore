@@ -12,5 +12,6 @@ tmp/*
 node_modules
 
 # Ignore locally installed gems
+.bundle/
 vendor/bundle/**/*
 vendor/bundle
