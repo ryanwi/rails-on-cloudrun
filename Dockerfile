@@ -7,11 +7,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Add a script to be executed every time the container starts.
-COPY infra/docker/scripts/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3000
+
+COPY Gemfile Gemfile.lock ./
+
+RUN bundle config frozen true \
+    && bundle config jobs 4 \
+    && bundle config deployment true \
+    && bundle config without 'development test' \
+    && bundle install
+
+COPY . .
+
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 
 CMD ["bin/puma", "-C", "config/puma.rb"]
