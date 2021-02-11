@@ -30,4 +30,4 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 # CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
-CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+CMD ["bin/rails", "s", "-b", "0.0.0.0"]
