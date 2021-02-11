@@ -2,8 +2,6 @@ FROM ruby:2.7.2-slim
 
 WORKDIR /usr/src/app/
 
-ENV RAILS_ENV=production
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
